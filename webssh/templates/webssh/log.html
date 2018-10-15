@@ -1,0 +1,77 @@
+{% extends 'fort/base.html' %}
+{% load static %}
+{% block title %}日志系统{% endblock %}
+
+{% block css %}
+    <link href="{% static 'index.css' %}" rel="stylesheet"/>
+{% endblock %}
+
+{% block content %}
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            日志系统
+            <small>Log List</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
+            <li class="active">日志系统</li>
+        </ol>
+        <hr/>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+        <div class="table-responsive">
+            <table id="log_table" class="table table-hover table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>用户类型</th>
+                    <th>用户名</th>
+                    <th>日志类型</th>
+                    <th>日志详细</th>
+                    <th>记录时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for log in logs %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ log.user.userprofile.user_type }}</td>
+                        <td>{{ log.user.username }}</td>
+                        <td>{{ log.log_type }}</td>
+                        <td>
+                            <pre>{{ log.content }}</pre>
+                        </td>
+                        <td>{{ log.c_time }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>没有日志！</tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <!-- /.content -->
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'plugins/datatables/dataTables.bootstrap.min.js' %}"></script>
+    <script>
+        $(function () {
+            $('#log_table').DataTable({
+                "paging": true, <!-- 允许分页 -->
+                "lengthChange": true, <!-- 允许改变每页显示的行数 -->
+                "searching": true, <!-- 允许内容搜索 -->
+                "ordering": true, <!-- 允许排序 -->
+                "info": true, <!-- 显示信息 -->
+                "autoWidth": true
+            });
+        });
+    </script>
+
+{% endblock %}

@@ -1,0 +1,152 @@
+{% extends 'webssh/base.html' %}
+{% load static %}
+{% block title %}主机帐号{% endblock %}
+
+{% block css %}
+    <link href="{% static 'index.css' %}" rel="stylesheet"/>
+{% endblock %}
+
+{% block content %}
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            主机帐号
+            <small>HostUser List</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
+            <li class="active">主机帐号</li>
+        </ol>
+        <hr/>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+        <div class="table-responsive">
+            <table id="host_table" class="table table-hover table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>主机名称</th>
+                    <th>IP地址</th>
+                    <th>端口</th>
+                    <th>用户名</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in remote_user_bind_hosts %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ item.host.host_name }}</td>
+                        <td>{{ item.host.ip }}</td>
+                        <td>{{ item.host.port }}</td>
+                        <td>{{ item.remote_user.remote_user_name }}</td>
+                        <td>
+                            <span class="hidden">{{ item.id }}</span>
+                            <button type="button" class="btn btn-success">连接</button>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>没有可用帐号</tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div id="term"></div>
+        <div id="disconnect">
+            <button type="button" class="btn btn-danger">关闭连接</button>
+        </div>
+    </section>
+    <!-- /.content -->
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'plugins/datatables/dataTables.bootstrap.min.js' %}"></script>
+    <script src="{% static 'term.js' %}"></script>
+    <script src="{% static 'webssh.js' %}"></script>
+    <script>
+        $(function () {
+            $('#host_table').DataTable({
+                "paging": true, <!-- 允许分页 -->
+                "lengthChange": true, <!-- 允许改变每页显示的行数 -->
+                "searching": true, <!-- 允许内容搜索 -->
+                "ordering": true, <!-- 允许排序 -->
+                "info": true, <!-- 显示信息 -->
+                "autoWidth": true
+            });
+        });
+    </script>
+
+    <script>
+        function openTerminal(options) {
+            //创建websocket通道
+            var client = new IronSSHClient();
+            var term = new Terminal(
+                {
+                    cols: 80,
+                    rows: 24,
+                    handler: function (key) {
+                        client.send(key);
+                    },
+                    screenKeys: true,
+                    useStyle: true,
+                    cursorBlink: true
+                });
+            term.open();
+            $('.terminal').detach().appendTo('#term');
+            term.write('开始连接......');
+            client.connect(
+                $.extend(options,
+                    {
+                        onError: function (error) {
+                            term.write('错误： ' + error + '\r\n');
+                        },
+                        onConnect: function () {
+                            term.write('\r');
+                        },
+                        onClose: function () {
+                            term.write('对方断开了连接.......');
+                        }, //term.destroy();
+                        onData: function (data) {
+                            term.write(data);
+                        }
+                    }
+                )
+            );
+
+        }
+    </script>
+
+    <script>
+
+
+        $(document).ready(function () {
+            //初始化情况下，关闭链接的按钮是隐藏的
+            $('#disconnect').hide();
+
+            //点击关闭链接，清除终端div中的内容，显示表格。需要先在终端内exit退出ssh链接！
+            $('#disconnect button').click(function () {
+                $('#term').empty();
+                $('div.table-responsive').show();
+                $('#disconnect').hide();
+            });
+
+            //点击连接按钮，开启websocket通道，进行数据传输
+            $('#host_table button').click(function () {
+                $('div.table-responsive').hide();
+                $('#disconnect').show();
+                var des_id = $(this).parent().children().first().text();
+                var options = {
+                    des_id: des_id
+                };
+                //打开Web模拟的ssh终端
+                openTerminal(options);
+            });
+        });
+    </script>
+{% endblock %}

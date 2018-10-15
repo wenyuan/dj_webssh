@@ -1,0 +1,5 @@
+.idea/
+migrations/
+~$*
+*.pyc
+*.sqlite3
