@@ -71,8 +71,8 @@ def connect(request, user_bind_host_id):
 
     message = '来自{remote}的请求 尝试连接 -> {username} @ {hostname}  <{ip} : {port}>'.format(
         remote=request.META.get('REMOTE_ADDR'),
-        username=remote_user_bind_host.remote_user.remote_user_name,
-        hostname=remote_user_bind_host.host.host_name,
+        username=remote_user_bind_host.remote_user.remote_username,
+        hostname=remote_user_bind_host.host.hostname,
         ip=remote_user_bind_host.host.ip,
         port=remote_user_bind_host.host.port
     )
@@ -85,12 +85,12 @@ def connect(request, user_bind_host_id):
         bridge.open(
             host_ip=remote_user_bind_host.host.ip,
             port=remote_user_bind_host.host.port,
-            username=remote_user_bind_host.remote_user.remote_user_name,
+            username=remote_user_bind_host.remote_user.remote_username,
             password=remote_user_bind_host.remote_user.password
         )
     except Exception as e:
         message = '尝试连接{0}的过程中发生错误：\n {1}'.format(
-            remote_user_bind_host.remote_user.remote_user_name, e)
+            remote_user_bind_host.remote_user.remote_username, e)
         print(message)
         add_log(request.user, message, log_type='2')
         return HttpResponse("错误！无法建立SSH连接！")
