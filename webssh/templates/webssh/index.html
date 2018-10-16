@@ -39,10 +39,10 @@
                 {% for item in remote_user_bind_hosts %}
                     <tr>
                         <td>{{ forloop.counter }}</td>
-                        <td>{{ item.host.host_name }}</td>
+                        <td>{{ item.host.hostname }}</td>
                         <td>{{ item.host.ip }}</td>
                         <td>{{ item.host.port }}</td>
-                        <td>{{ item.remote_user.remote_user_name }}</td>
+                        <td>{{ item.remote_user.remote_username }}</td>
                         <td>
                             <span class="hidden">{{ item.id }}</span>
                             <button type="button" class="btn btn-success">连接</button>
@@ -85,7 +85,7 @@
     <script>
         function openTerminal(options) {
             //创建websocket通道
-            var client = new IronSSHClient();
+            var client = new WebSSHClient();
             var term = new Terminal(
                 {
                     cols: 80,

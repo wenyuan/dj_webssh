@@ -8,14 +8,14 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Host(models.Model):
-    host_name = models.CharField(max_length=128, unique=True, verbose_name='远程主机名')
+    hostname = models.CharField(max_length=128, unique=True, verbose_name='远程主机名')
     ip = models.GenericIPAddressField(verbose_name='主机IP')  # ip可能重复
     port = models.SmallIntegerField(default=22, verbose_name='端口')
     release = models.CharField(max_length=256, default='CentOS', verbose_name='发行版本')
     memo = models.TextField(blank=True, null=True, verbose_name='备注')
 
     def __str__(self):
-        return '[%s]  < %s : %s >' % (self.host_name, self.ip, self.port)
+        return '[%s]  < %s : %s >' % (self.hostname, self.ip, self.port)
 
     class Meta:
         verbose_name = '远程主机'
@@ -27,17 +27,17 @@ class RemoteUser(models.Model):
     # root,user,test,www,http.....
     # host1:root    host2:root
     # 用户名可以重复的！
-    remote_user_name = models.CharField(max_length=128, verbose_name='远程主机用户名')
+    remote_username = models.CharField(max_length=128, verbose_name='远程主机用户名')
     # 密码将被用于ssh登录
     password = models.CharField(max_length=512)
 
     def __str__(self):
-        return '[%s]   < %s >' % (self.remote_user_name, self.password)
+        return '[%s]   < %s >' % (self.remote_username, self.password)
 
     class Meta:
         verbose_name = '远程主机用户'
         verbose_name_plural = '远程主机用户'
-        unique_together = ('remote_user_name', 'password')  # root 123
+        unique_together = ('remote_username', 'password')  # root 123
 
 
 class RemoteUserBindHost(models.Model):
@@ -48,8 +48,8 @@ class RemoteUserBindHost(models.Model):
     enabled = models.BooleanField(default=True, verbose_name='是否启用')
 
     def __str__(self):
-        return '[ %s ]   <  %s : %s >' % (self.host.host_name,
-                                          self.remote_user.remote_user_name,
+        return '[ %s ]   <  %s : %s >' % (self.host.hostname,
+                                          self.remote_user.remote_username,
                                           self.remote_user.password)
 
     class Meta:
