@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.utils.translation import ugettext_lazy as _
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
@@ -27,11 +28,11 @@ def login(request):
                 return redirect('/index/')
             else:
                 # enabled=False
-                message = '该用户已经被禁用，请联系管理员！'
+                message = _('This user has been disabled, please contact the administrator!')
                 return render(request, 'webssh/login.html', locals())
         else:
             # 登录失败
-            message = '登录失败，用户名或者密码错误！'
+            message = _('Login failed, user name or password error!')
             return render(request, 'webssh/login.html', locals())
     return render(request, 'webssh/login.html', locals())
 
@@ -56,7 +57,7 @@ def index(request):
 def connect(request, user_bind_host_id):
     # 　如果当前请求不是websocket请求则退出
     if not request.environ.get('wsgi.websocket'):
-        return HttpResponse('错误，非websocket请求！')
+        return HttpResponse(_('Error, non-websocket request!'))
 
     try:
         remote_user_bind_host = models.RemoteUserBindHost.objects.filter(
@@ -65,11 +66,11 @@ def connect(request, user_bind_host_id):
             Q(userprofile__user=request.user) | Q(group__userprofile__user=request.user)).distinct()[0]
 
     except Exception as e:
-        message = '无效的账户或者无权访问！\n' + str(e)
+        message = _('Invalid account or unauthorized access!\n') + str(e)
         add_log(request.user, message, log_type='2')
-        return HttpResponse('请求主机发生错误！')
+        return HttpResponse(_('Error requesting host!'))
 
-    message = '来自{remote}的请求 尝试连接 -> {username} @ {hostname}  <{ip} : {port}>'.format(
+    message = _('from{remote} try to connect -> {username}@{hostname} <{ip}:{port}>').format(
         remote=request.META.get('REMOTE_ADDR'),
         username=remote_user_bind_host.remote_user.remote_username,
         hostname=remote_user_bind_host.host.hostname,
@@ -89,16 +90,15 @@ def connect(request, user_bind_host_id):
             password=remote_user_bind_host.remote_user.password
         )
     except Exception as e:
-        message = '尝试连接{0}的过程中发生错误：\n {1}'.format(
+        message = _('error occurred while connecting to {0}: \n {1}').format(
             remote_user_bind_host.remote_user.remote_username, e)
-        print(message)
         add_log(request.user, message, log_type='2')
-        return HttpResponse("错误！无法建立SSH连接！")
+        return HttpResponse(_('Error! Unable to establish SSH connection!'))
 
     bridge.shell()
 
     request.environ.get('wsgi.websocket').close()
-    print('用户断开连接.....')
+    print(_('User disconnect...'))
     return HttpResponse("200, ok")
 
 
@@ -108,5 +108,5 @@ def get_log(request):
         logs = models.AccessLog.objects.all()
         return render(request, 'webssh/log.html', locals())
     else:
-        add_log(request.user, '非超级用户尝试访问日志系统', log_type='4')
+        add_log(request.user, _('Non-superuser tries to access the logging system'), log_type='4')
         return redirect('/index/')

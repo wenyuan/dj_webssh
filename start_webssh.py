@@ -16,7 +16,7 @@ version = '1.0.0'
 
 root_path = os.path.dirname(__file__)
 
-parser = argparse.ArgumentParser(description="IronFort - 基于WebSocket的SSH堡垒机")
+parser = argparse.ArgumentParser(description="WEBSSH - 基于Django的WebSSH终端")
 parser.add_argument('--port', '-p',
                     type=int,
                     default=8000,
@@ -28,7 +28,7 @@ parser.add_argument('--host', '-H',
 
 args = parser.parse_args()
 
-print('\033[31mIronFort\033[0m {0}  running on  {1} : {2}'.format(version, args.host, args.port))
+print('\033[31mWebSSH\033[0m {0}  running on  {1} : {2}'.format(version, args.host, args.port))
 
 ws_server = WSGIServer(
     (args.host, args.port),
