@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.utils.translation import ugettext_lazy as _
 import gevent
 from gevent.socket import wait_read, wait_write
 import paramiko
@@ -16,7 +17,7 @@ def add_log(user, content, log_type='1'):
             content=content
         )
     except Exception as e:
-        print('保存日志的过程中发生了错误：', e)
+        print(_('Error occurred while saving the log:'), e)
 
 
 class WSSHBridge:

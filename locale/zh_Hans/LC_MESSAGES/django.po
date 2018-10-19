@@ -1,0 +1,118 @@
+# ------------------------ model ------------------------
+# Host model
+msgid "remote hostname"
+msgstr "远程主机名"
+
+msgid "host ip"
+msgstr "主机IP"
+
+msgid "port"
+msgstr "端口"
+
+msgid "release version"
+msgstr "发行版本"
+
+msgid "memo"
+msgstr "备注"
+
+msgid "remote host"
+msgstr "远程主机"
+
+# RemoteUser model
+msgid "remote username"
+msgstr "远程主机用户名"
+
+msgid "remote user"
+msgstr "远程用户"
+
+msgid "password"
+msgstr "密码"
+
+# RemoteUserBindHost model
+msgid "enable to connect"
+msgstr "是否允许连接"
+
+msgid "remote_user-host"
+msgstr "远程用户-主机"
+
+# Group model
+msgid "group name"
+msgstr "用户组名"
+
+msgid "remote_user-host list"
+msgstr "远程用户-主机 列表"
+
+msgid "groups: %s"
+msgstr "用户组： %s"
+
+msgid "group"
+msgstr "用户组"
+
+# UserProfile model
+msgid "common user"
+msgstr "普通用户"
+
+msgid "user type"
+msgstr "用户类型"
+
+msgid "groups belong"
+msgstr "所属用户组"
+
+msgid "enable to login"
+msgstr "是否可以登录该系统"
+
+msgid "user"
+msgstr "系统用户"
+
+# AccessLog model
+msgid "log user"
+msgstr "产生日志的用户"
+
+msgid "log type"
+msgstr "日志类型"
+
+msgid "log time"
+msgstr "日志产生时间"
+
+msgid "%s < %s >  log time： <%s>"
+msgstr "%s < %s >  记录时间： <%s>"
+
+msgid "user behave log"
+msgstr "用户行为日志"
+
+# ------------------------ api ------------------------
+# login api
+msgid "This user has been disabled, please contact the administrator!"
+msgstr "该用户已经被禁用，请联系管理员！"
+
+msgid "Login failed, user name or password error!"
+msgstr "登录失败，用户名或者密码错误！"
+
+# webssh api
+msgid "Error, non-websocket request!"
+msgstr "错误，非websocket请求！"
+
+msgid "Invalid account or unauthorized access!\n"
+msgstr "无效的账户或者无权访问！\n"
+
+msgid "Error requesting host!"
+msgstr "请求主机发生错误！"
+
+msgid "from{remote} try to connect -> {username}@{hostname} <{ip}:{port}>"
+msgstr "来自{remote}的请求 尝试连接 -> {username}@{hostname} <{ip}:{port}>"
+
+msgid "error occurred while connecting to {0}: \n {1}"
+msgstr "尝试连接{0}的过程中发生错误：\n {1}"
+
+msgid "Error! Unable to establish SSH connection!"
+msgstr "错误！无法建立SSH连接！"
+
+msgid "User disconnect..."
+msgstr "用户断开连接....."
+
+# access log api
+msgid "Non-superuser tries to access the logging system"
+msgstr "非超级用户尝试访问日志系统"
+
+msgid "Error occurred while saving the log:"
+msgstr "保存日志的过程中发生了错误："
