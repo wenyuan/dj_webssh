@@ -2,3 +2,6 @@
 ~$*
 *.pyc
 *.sqlite3
+settings.py
+migrations/
+!migrations/__init__.py
