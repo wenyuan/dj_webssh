@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from apps.webssh import views
+from project_apps.webssh import views
 from django.conf.urls.static import static
 from django.conf import settings
 

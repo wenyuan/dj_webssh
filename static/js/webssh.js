@@ -55,5 +55,8 @@ WebSSHClient.prototype.connect = function (options) {
 
 WebSSHClient.prototype.send = function (data) {
     this._connection.send(JSON.stringify({'data':data}));
-    
+};
+
+WebSSHClient.prototype.close = function () {
+  this._connection.close()
 };
