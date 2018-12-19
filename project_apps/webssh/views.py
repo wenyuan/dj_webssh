@@ -49,7 +49,6 @@ def index(request):
     remote_user_bind_hosts = models.RemoteUserBindHost.objects.filter(
         Q(enabled=True),
         Q(userprofile__user=request.user) | Q(group__userprofile__user=request.user)).distinct()
-
     return render(request, 'webssh/index.html', locals())
 
 

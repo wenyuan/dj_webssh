@@ -5,4 +5,4 @@ from django.apps import AppConfig
 
 
 class WebsshConfig(AppConfig):
-    name = 'webssh'
+    name = 'project_apps.webssh'
