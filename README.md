@@ -1,4 +1,4 @@
-# Django WebSSH
+# DJ WebSSH
 > 基于django实现webssh。 </br>
 
 ## 环境
@@ -13,17 +13,30 @@
 ## 部署和运行方式
 > 由于gevent的部分功能只能在Unix/Linux下运行，所以该项目不支持部署在windows环境下，须知。
 
-```
+```bash
 	Step1. gitclone https://github.com/winyuan/dj_webssh.git</br>
 	Step2. cd dj_webssh
            pip install -r requirements.txt
-           python manage.py makemigrations
-           python manage.py migrate
-           python manage.py compilemessages
-           python manage.py createsuperuser
+           python project_helper/init_data.py
 	Step3. python start_webssh.py
 	Step4. 访问: ip:port/admin/
 ``` 
+
+## 后台管理设置
+> 通过后台进行用户和服务器管理
+
+```bash
+	Step1. 访问 ip:port/admin/ 并使用超级管理员登陆
+	Step2. 创建 认证和授权-用户
+	Step3. 创建 Webssh-远程用户(远程主机的登陆用户)
+	Step4. 创建 Webssh-远程主机(远程主机ssh的ip和port)
+	Step5. 创建 Webssh-远程用户-主机(登陆方式和登陆地址)
+	选择一：
+		编辑 Webssh-用户信息(该用户可访问哪些主机)
+	选择二：
+		编辑 Webssh-用户组(该用户组的成员可访问哪些主机)
+		编辑 Webssh-用户信息(加入指定用户组)
+```
 
 ## 访问方式
 * 前端页面：ip:8000

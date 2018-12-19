@@ -77,9 +77,9 @@ class Group(models.Model):
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name=_('related user'))
     user_type = models.CharField(max_length=128, default=_('common user'), verbose_name=_('user type'))
-    remote_user_bind_hosts = models.ManyToManyField('RemoteUserBindHost', blank=True, verbose_name='remote_user-host list')
+    remote_user_bind_hosts = models.ManyToManyField('RemoteUserBindHost', blank=True, verbose_name=_('remote_user-host list'))
     groups = models.ManyToManyField('Group', blank=True, verbose_name=_('groups belong'))
     enabled = models.BooleanField(default=True, verbose_name=_('enable to login'))
 
@@ -88,7 +88,7 @@ class UserProfile(models.Model):
 
     class Meta:
         db_table = 'user_profile'
-        verbose_name = _('user')
+        verbose_name = _('user profile')
         verbose_name_plural = verbose_name
 
 
