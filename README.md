@@ -20,7 +20,7 @@
            python manage.py makemigrations
            python manage.py migrate
            python manage.py compilemessages
-           python manege.py createsuperuser
+           python manage.py createsuperuser
 	Step3. python start_webssh.py
 ``` 
 
