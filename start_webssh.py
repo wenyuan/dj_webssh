@@ -9,7 +9,7 @@ monkey.patch_all()
 import argparse
 from gevent.pywsgi import WSGIServer
 from geventwebsocket.handler import WebSocketHandler
-from django_webssh.wsgi import application
+from dj_webssh.wsgi import application
 import os
 
 version = '1.0.0'

@@ -6,22 +6,23 @@
 * Python 2.7
 
 ## 预览
-![login](https://github.com/xwenyuan/django_webssh/blob/master/static/img/login.png)
-![webssh](https://github.com/xwenyuan/django_webssh/blob/master/static/img/webssh.png)
-![log](https://github.com/xwenyuan/django_webssh/blob/master/static/img/log.png)
+![login](https://github.com/winyuan/dj_webssh/blob/master/static/img/login.png)
+![webssh](https://github.com/winyuan/dj_webssh/blob/master/static/img/webssh.png)
+![log](https://github.com/winyuan/dj_webssh/blob/master/static/img/log.png)
 
 ## 部署和运行方式
 > 由于gevent的部分功能只能在Unix/Linux下运行，所以该项目不支持部署在windows环境下，须知。
 
 ```
-	Step1. gitclone https://github.com/xwenyuan/django_webssh.git</br>
-	Step2. cd django_webssh
+	Step1. gitclone https://github.com/winyuan/dj_webssh.git</br>
+	Step2. cd dj_webssh
            pip install -r requirements.txt
            python manage.py makemigrations
            python manage.py migrate
            python manage.py compilemessages
            python manage.py createsuperuser
 	Step3. python start_webssh.py
+	Step4. 访问: ip:port/admin/
 ``` 
 
 ## 访问方式
@@ -34,5 +35,7 @@
 * 日志审计
 
 ## 主要更新记录
+* 2018.12.19
+  * 局部重构
 * 2018.10.19
   * 提交代码
