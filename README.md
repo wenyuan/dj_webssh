@@ -14,7 +14,7 @@
 > 由于gevent的部分功能只能在Unix/Linux下运行，所以该项目不支持部署在windows环境下，须知。
 
 ```bash
-	Step1. gitclone https://github.com/winyuan/dj_webssh.git
+	Step1. git clone https://github.com/winyuan/dj_webssh.git
 	Step2. cd dj_webssh
            pip install -r requirements.txt
            python project_helper/init_data.py
