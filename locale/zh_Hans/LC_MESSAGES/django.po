@@ -39,9 +39,6 @@ msgstr "远程用户-主机"
 msgid "group name"
 msgstr "用户组名"
 
-msgid "remote_user-host list"
-msgstr "远程用户-主机 列表"
-
 msgid "groups: %s"
 msgstr "用户组： %s"
 
@@ -49,11 +46,20 @@ msgid "group"
 msgstr "用户组"
 
 # UserProfile model
+msgid "related user"
+msgstr "关联用户"
+
 msgid "common user"
 msgstr "普通用户"
 
+msgid "super user"
+msgstr "超级管理员用户"
+
 msgid "user type"
 msgstr "用户类型"
+
+msgid "remote_user-host list"
+msgstr "可访问服务器列表"
 
 msgid "groups belong"
 msgstr "所属用户组"
@@ -61,8 +67,8 @@ msgstr "所属用户组"
 msgid "enable to login"
 msgstr "是否可以登录该系统"
 
-msgid "user"
-msgstr "系统用户"
+msgid "user profile"
+msgstr "用户信息"
 
 # AccessLog model
 msgid "log user"
