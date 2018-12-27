@@ -81,24 +81,24 @@
                 "info": true,
                 "autoWidth": true,
                 "oLanguage": {
-                    "sProcessing" : "处理中...",
-					"sLengthMenu" : "显示 _MENU_ 项结果",
-					"sZeroRecords" : "没有匹配结果",
-					"sInfo" : "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
-					"sInfoEmpty" : "显示第 0 至 0 项结果，共 0 项",
-					"sInfoFiltered" : "(由 _MAX_ 项结果过滤)",
-					"sInfoPostFix" : "",
-					"sSearch" : "搜索:",
-					"sUrl" : "",
-					"sEmptyTable" : "没有可用账号",
-					"sLoadingRecords" : "载入中...",
-					"sInfoThousands" : ",",
-					"oPaginate" : {
-						"sFirst" : "首页",
-						"sPrevious" : "上页",
-						"sNext" : "下页",
-						"sLast" : "末页"
-					},
+                    "sProcessing": "处理中...",
+                    "sLengthMenu": "显示 _MENU_ 项结果",
+                    "sZeroRecords": "没有匹配结果",
+                    "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                    "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                    "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                    "sInfoPostFix": "",
+                    "sSearch": "搜索:",
+                    "sUrl": "",
+                    "sEmptyTable": "没有可用账号",
+                    "sLoadingRecords": "载入中...",
+                    "sInfoThousands": ",",
+                    "oPaginate": {
+                        "sFirst": "首页",
+                        "sPrevious": "上页",
+                        "sNext": "下页",
+                        "sLast": "末页"
+                    },
                 }
             });
         });
@@ -107,13 +107,13 @@
     <script>
         function openTerminal(options) {
             //创建websocket通道
-            var client = new WebSSHClient();
-            var term = new Terminal(
+            let wsClient = new WebSSHClient();
+            let term = new Terminal(
                 {
                     cols: 80,
                     rows: 24,
                     handler: function (key) {
-                        client.send(key);
+                        wsClient.send(key);
                     },
                     screenKeys: true,
                     useStyle: true,
@@ -122,7 +122,7 @@
             term.open();
             $('.terminal').detach().appendTo('#term');
             term.write('开始连接......');
-            client.connect(
+            wsClient.connect(
                 $.extend(options,
                     {
                         onError: function (error) {
@@ -160,9 +160,9 @@
             $('#host_table button').click(function () {
                 $('div.table-responsive').hide();
                 $('#disconnect').show();
-                var des_id = $(this).parent().children().first().text();
-                var options = {
-                    des_id: des_id
+                let desId = $(this).parent().children().first().text();
+                let options = {
+                    des_id: desId
                 };
                 //打开Web模拟的ssh终端
                 openTerminal(options);
