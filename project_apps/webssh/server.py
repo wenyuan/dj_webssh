@@ -68,6 +68,10 @@ class WSSHBridge:
 
                 if 'data' in data:
                     # print('websocket -> ssh', data['data'])
+                    # 心跳检测
+                    if data['data'] == 'heart beat check...':
+                        self._websocket.send(json.dumps({'data': data['data']}))
+                        continue
                     self.cmd_string += data['data']
                     channel.send(data['data'])
         finally:
@@ -119,5 +123,4 @@ class WSSHBridge:
         self.channel.invoke_shell()
         self._bridge(self.channel)
         self.channel.close()
-        # 创建日志
-        add_log(self.user, self.cmd_string)
+        self.trans.close()
