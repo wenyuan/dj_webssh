@@ -3,6 +3,7 @@
 {% block title %}主机帐号{% endblock %}
 
 {% block css %}
+    <link href="{% static 'plugins/xterm-3.9.1/xterm.css' %}" rel="stylesheet"/>
     <link href="{% static 'css/index.css' %}" rel="stylesheet"/>
 {% endblock %}
 
@@ -62,17 +63,42 @@
             <button type="button" class="btn btn-danger">关闭连接</button>
         </div>
     </section>
-    <!-- /.content -->
 
 {% endblock %}
 
 {% block script %}
     <script src="{% static 'plugins/datatables/jquery.dataTables.min.js' %}"></script>
     <script src="{% static 'plugins/datatables/dataTables.bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/term.js' %}"></script>
+    {#    <script src="{% static 'js/term.js' %}"></script>#}
+    <script src="{% static 'plugins/xterm-3.9.1/xterm.js' %}"></script>
     <script src="{% static 'js/webssh.js' %}"></script>
     <script>
         $(function () {
+            /******************** page funcs ********************/
+            var wsClient = null;
+
+            $('#disconnect').hide();
+
+            $('#disconnect button').click(function () {
+                $('#term').empty();
+                $('div.table-responsive').show();
+                $('#disconnect').hide();
+                if (wsClient) {
+                    wsClient.close()
+                }
+            });
+
+            $('#host_table button').click(function () {
+                $('div.table-responsive').hide();
+                $('#disconnect').show();
+                let desId = $(this).parent().children().first().text();
+                let options = {
+                    des_id: desId
+                };
+                openTerminal(options);
+            });
+
+            /******************** datatables ********************/
             $('#host_table').DataTable({
                 "paging": true,
                 "lengthChange": true,
@@ -101,72 +127,39 @@
                     },
                 }
             });
-        });
-    </script>
 
-    <script>
-        function openTerminal(options) {
-            //创建websocket通道
-            let wsClient = new WebSSHClient();
-            let term = new Terminal(
-                {
-                    cols: 80,
-                    rows: 24,
-                    handler: function (key) {
-                        wsClient.send(key);
-                    },
-                    screenKeys: true,
-                    useStyle: true,
-                    cursorBlink: true
+            /******************** terminal ********************/
+            function openTerminal(options) {
+                //创建websocket通道
+                wsClient = new WebSSHClient();
+                let term = new Terminal();
+                term.open(document.getElementById('term'));
+                term.write('开始连接......');
+                term.on('data', function (key) {
+                    wsClient.send(key);
                 });
-            term.open();
-            $('.terminal').detach().appendTo('#term');
-            term.write('开始连接......');
-            wsClient.connect(
-                $.extend(options,
-                    {
-                        onError: function (error) {
-                            term.write('错误： ' + error + '\r\n');
-                        },
-                        onConnect: function () {
-                            term.write('\r');
-                        },
-                        onClose: function () {
-                            term.write('对方断开了连接.......');
-                        }, //term.destroy();
-                        onData: function (data) {
-                            term.write(data);
+                wsClient.connect(
+                    $.extend(options,
+                        {
+                            onError: function (error) {
+                                term.write('错误： ' + error + '\r\n');
+                            },
+                            onConnect: function () {
+                                term.write('\r');
+                            },
+                            onClose: function () {
+                                term.write('\r');
+                                term.write('服务器断开了连接.......');
+                                // term.destroy()
+                            },
+                            onData: function (data) {
+                                term.write(data);
+                            }
                         }
-                    }
-                )
-            );
+                    )
+                );
 
-        }
-    </script>
-
-    <script>
-        $(document).ready(function () {
-            //初始化情况下，关闭链接的按钮是隐藏的
-            $('#disconnect').hide();
-
-            //点击关闭链接，清除终端div中的内容，显示表格。需要先在终端内exit退出ssh链接！
-            $('#disconnect button').click(function () {
-                $('#term').empty();
-                $('div.table-responsive').show();
-                $('#disconnect').hide();
-            });
-
-            //点击连接按钮，开启websocket通道，进行数据传输
-            $('#host_table button').click(function () {
-                $('div.table-responsive').hide();
-                $('#disconnect').show();
-                let desId = $(this).parent().children().first().text();
-                let options = {
-                    des_id: desId
-                };
-                //打开Web模拟的ssh终端
-                openTerminal(options);
-            });
+            }
         });
     </script>
 {% endblock %}

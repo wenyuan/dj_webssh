@@ -48,8 +48,9 @@
 * 日志审计
 
 ## 主要更新记录
-* 2018.12.27
+* 2018.12.28
   * 增加心跳检测 
+  * 虚拟终端将[term.js](https://github.com/chjj/term.js)替换成[xterm.js](https://github.com/xtermjs/xterm.js)
 * 2018.12.19
   * 局部重构
 * 2018.10.19

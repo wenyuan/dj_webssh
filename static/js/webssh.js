@@ -3,7 +3,7 @@
  */
 
 function WebSSHClient() {
-    this.heartBeatInterval = 3000;
+    this.heartBeatInterval = 30000;
     this.heartBeatTimer = null;
     this.serverTimer = null;
 }
