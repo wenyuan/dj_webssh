@@ -46,6 +46,7 @@ class WSSHBridge:
             self.trans = paramiko.Transport((host_ip, port))
             self.trans.start_client()
             self.trans.auth_password(username=username, password=password)
+            self.trans.set_keepalive(30)
             channel = self.trans.open_session()
             channel.get_pty()
             self.channel = channel

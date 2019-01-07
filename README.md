@@ -1,5 +1,6 @@
 # DJ WebSSH
 > 基于django实现webssh。 </br>
+> 通过gevent实现WebSocket通信。
 
 ## 环境
 * Linux
@@ -48,8 +49,11 @@
 * 日志审计
 
 ## 主要更新记录
+* 2019.01.07
+  * 增加ssh端心跳检测
+  * 目前该分支的功能实现已经完备，基于py2.7和django1.11.16。后期如无bug，该分支将不再进行多余更新。
 * 2018.12.28
-  * 增加心跳检测 
+  * 增加websocket心跳检测 
   * 虚拟终端将[term.js](https://github.com/chjj/term.js)替换成[xterm.js](https://github.com/xtermjs/xterm.js)
 * 2018.12.19
   * 局部重构
