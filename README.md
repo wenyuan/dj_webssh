@@ -1,5 +1,6 @@
 # DJ WebSSH
 > 基于django实现webssh。 </br>
+> 通过Django Channels实现WebSocket
 
 ## 环境
 * Linux
@@ -11,14 +12,16 @@
 ![log](https://github.com/winyuan/dj_webssh/blob/master/static/img/log.png)
 
 ## 部署和运行方式
-> 由于gevent的部分功能只能在Unix/Linux下运行，所以该项目不支持部署在windows环境下，须知。
+> 我们通过Channels用来在消费者和生产者之间传递消息，所以需要定义一个通道层。
+> 开发测试时候采用驻留内存的通道层, 但是没有跨进程的channel沟通, 也只能用于"runserver"，但不用下载redis；
+> 实际工程部署将使用Redis作为我们的通道层，这两种配置方法would都写在settings.py中了。
 
 ```bash
 	Step1. git clone https://github.com/winyuan/dj_webssh.git
 	Step2. cd dj_webssh
            pip install -r requirements.txt
            python project_helper/init_data.py
-	Step3. python start_webssh.py
+	Step3. python manage.py runserver 0.0.0.0:8000
 	Step4. 访问: ip:port/admin/
 ``` 
 
@@ -48,10 +51,6 @@
 * 日志审计
 
 ## 主要更新记录
-* 2018.12.28
-  * 增加心跳检测 
-  * 虚拟终端将[term.js](https://github.com/chjj/term.js)替换成[xterm.js](https://github.com/xtermjs/xterm.js)
-* 2018.12.19
-  * 局部重构
-* 2018.10.19
-  * 提交代码
+* 2018.12.30
+  * 局部重构，用channels代替gevent实现支持websocket通信
+  * 目前还未完成，有点问题（paramiko实例对象需要持久化在内存中，暂时没找到较好的方案）
