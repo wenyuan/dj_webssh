@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # third party
+    'channels',
+    # project apps
     'project_apps.webssh'
 ]
 
@@ -56,6 +59,29 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'dj_webssh.urls'
+
+
+# test
+# https://github.com/django/channels/issues/127
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'asgiref.inmemory.ChannelLayer',
+        "ROUTING": "dj_webssh.routing.channel_routing"
+    },
+}
+# production
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "asgi_redis.RedisChannelLayer",
+#         "CONFIG": {
+#             "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')],
+#         },
+#         "ROUTING": "dj_webssh.routing.channel_routing",
+#     },
+# }
+
+ASGI_APPLICATION = 'dj_webssh.routing.application'
+
 
 TEMPLATES = [
     {
@@ -129,4 +155,7 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
+STATIC_ROOT = os.path.join(BASE_DIR, 'all_static_files')

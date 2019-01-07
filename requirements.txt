@@ -1,5 +1,8 @@
 django==1.11.16
-gevent==1.2.2
-gevent-websocket==0.10.1
-argparse==1.4.0
+# ssh
 paramiko==2.4.2
+# websocket支持
+channels==1.1.6
+asgi_redis==1.4.3
+# windows上运行需要装
+#pypiwin32

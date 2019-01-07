@@ -2,8 +2,7 @@
 from __future__ import unicode_literals
 
 from django.utils.translation import ugettext_lazy as _
-import gevent
-from gevent.socket import wait_read, wait_write
+from threading import Thread
 import paramiko
 import json
 from . import models
@@ -46,38 +45,44 @@ class WSSHBridge:
             self.trans = paramiko.Transport((host_ip, port))
             self.trans.start_client()
             self.trans.auth_password(username=username, password=password)
-            channel = self.trans.open_session()
-            channel.get_pty()
-            self.channel = channel
+            self.channel = self.trans.open_session()
+            self.channel.get_pty()
+            self.channel.invoke_shell()
         except Exception as e:
             self._websocket.send(json.dumps({'error': e}))
             raise
 
-    def _forward_inbound(self, channel):
+    def _forward_inbound(self, data):
         """
         正向数据转发，websocket ->  ssh
         :param channel:
         :return:
         """
         try:
-            while True:
-                data = self._websocket.receive()
-                if not data:
-                    return
-                data = json.loads(str(data))
-
-                if 'data' in data:
-                    # print('websocket -> ssh', data['data'])
-                    # 心跳检测
-                    if data['data'] == 'heart beat check...':
-                        self._websocket.send(json.dumps({'data': data['data']}))
-                        continue
-                    self.cmd_string += data['data']
-                    channel.send(data['data'])
-        finally:
+            self.channel.send(data)
+            return
+        except:
             self.close()
 
-    def _forward_outbound(self, channel):
+        # try:
+        #     while True:
+        #         data = self._websocket.receive()
+        #         if not data:
+        #             return
+        #         data = json.loads(str(data))
+        #
+        #         if 'data' in data:
+        #             # print('websocket -> ssh', data['data'])
+        #             # 心跳检测
+        #             if data['data'] == 'heart beat check...':
+        #                 self._websocket.send(json.dumps({'data': data['data']}))
+        #                 continue
+        #             self.cmd_string += data['data']
+        #             channel.send(data['data'])
+        # finally:
+        #     self.close()
+
+    def _forward_outbound(self):
         """
         反向数据转发，ssh -> websocket
         :param channel:
@@ -85,42 +90,39 @@ class WSSHBridge:
         """
         try:
             while True:
-                wait_read(channel.fileno())
-                data = channel.recv(1024)
+                data = self.channel.recv(1024).decode('utf-8')
                 if not len(data):
                     return
+                # self.message['status'] = 0
+                # self.message['message'] = data
+                # message = json.dumps(self.message)
                 self._websocket.send(json.dumps({'data': data.decode()}))
-        finally:
+        except:
             self.close()
 
-    def _bridge(self, channel):
-        """
-        全双工通信
-        :param channel:
-        :return:
-        """
-        channel.setblocking(False)
-        channel.settimeout(0.0)
-        self._tasks = [
-            gevent.spawn(self._forward_inbound, channel),
-            gevent.spawn(self._forward_outbound, channel),
-        ]
-        gevent.joinall(self._tasks)
+
+        # try:
+        #     while True:
+        #         wait_read(channel.fileno())
+        #         data = channel.recv(1024)
+        #         if not len(data):
+        #             return
+        #         self._websocket.send(json.dumps({'data': data.decode()}))
+        # finally:
+        #     self.close()
 
     def close(self):
         """
         结束桥接会话
         :return:
         """
-        gevent.killall(self._tasks, block=True)
-        self._tasks = []
+        self.channel.close()
+        self._websocket.close()
 
-    def shell(self):
+    def shell(self, data):
         """
         启动一个shell通信界面
         :return:
         """
-        self.channel.invoke_shell()
-        self._bridge(self.channel)
-        self.channel.close()
-        self.trans.close()
+        Thread(target=self._forward_inbound, args=(data,)).start()
+        Thread(target=self._forward_outbound).start()
