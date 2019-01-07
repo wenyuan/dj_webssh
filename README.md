@@ -1,6 +1,6 @@
 # DJ WebSSH
 > 基于django实现webssh。 </br>
-> 通过Django Channels实现WebSocket
+> 通过Django Channels实现WebSocket通信。
 
 ## 环境
 * Linux
@@ -12,8 +12,8 @@
 ![log](https://github.com/winyuan/dj_webssh/blob/master/static/img/log.png)
 
 ## 部署和运行方式
-> 我们通过Channels用来在消费者和生产者之间传递消息，所以需要定义一个通道层。
-> 开发测试时候采用驻留内存的通道层, 但是没有跨进程的channel沟通, 也只能用于"runserver"，但不用下载redis；
+> 我们通过Channels用来在消费者和生产者之间传递消息，所以需要定义一个通道层。 </br>
+> 开发测试时候采用驻留内存的通道层, 但是没有跨进程的channel沟通，也只能用于"runserver"，但不用下载redis； </br>
 > 实际工程部署将使用Redis作为我们的通道层，这两种配置方法would都写在settings.py中了。
 
 ```bash
