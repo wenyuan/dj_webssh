@@ -1,4 +1,4 @@
-django==1.11.16
+django==1.11.23
 # ssh
 paramiko==2.4.2
 # websocket支持
