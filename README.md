@@ -13,7 +13,7 @@
 * [稳定可用版本](https://github.com/winyuan/dj_webssh/tree/gevent)
 * [开发中版本](https://github.com/winyuan/dj_webssh/tree/master)
 
-注意：master 版本纯属想折腾，目前暂不能运行。切下载稳定版本使用。
+注意：master 版本纯属想折腾，目前暂不能运行。请下载稳定版本使用。
 
 ## 预览
 
