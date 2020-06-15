@@ -6,6 +6,12 @@
 * Linux
 * Python 2.7
 
+## 版本
+[稳定可用版本](https://github.com/winyuan/dj_webssh/tree/gevent)
+[开发中版本](https://github.com/winyuan/dj_webssh/tree/master)
+
+注意：master 版本纯属想折腾，目前暂不能运行。切下载稳定版本使用。
+
 ## 预览
 ![login](https://github.com/winyuan/dj_webssh/blob/master/static/img/login.png)
 ![webssh](https://github.com/winyuan/dj_webssh/blob/master/static/img/webssh.png)
@@ -23,7 +29,7 @@
            python project_helper/init_data.py
 	Step3. python manage.py runserver 0.0.0.0:8000
 	Step4. 访问: ip:port/admin/
-``` 
+```
 
 ## 后台管理设置
 > 通过后台进行用户和服务器管理
