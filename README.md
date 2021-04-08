@@ -1,6 +1,6 @@
 # DJ WebSSH
-> 基于django实现webssh。 </br>
-> 通过gevent实现WebSocket通信。
+> 基于 django 实现 webssh。 </br>
+> 通过 gevent 实现 WebSocket 通信。
 
 ## 环境
 * Linux
@@ -12,7 +12,7 @@
 ![log](https://github.com/wenyuan/dj_webssh/blob/master/static/img/log.png)
 
 ## 部署和运行方式
-> 由于gevent的部分功能只能在Unix/Linux下运行，所以该项目不支持部署在windows环境下，须知。
+> 由于 gevent 的部分功能只能在 Unix/Linux 下运行，所以该项目不支持部署在 Windows 环境下，须知。
 
 ```bash
 	Step1. git clone https://github.com/wenyuan/dj_webssh.git
@@ -21,7 +21,7 @@
            python project_helper/init_data.py
 	Step3. python start_webssh.py
 	Step4. 访问: ip:port/admin/
-``` 
+```
 
 ## 后台管理设置
 > 通过后台进行用户和服务器管理
@@ -50,11 +50,11 @@
 
 ## 主要更新记录
 * 2019.01.07
-  * 增加ssh端心跳检测
-  * 目前该分支的功能实现已经完备，基于py2.7和django1.11.16。后期如无bug，该分支将不再进行多余更新。
+  * 增加 ssh 端心跳检测
+  * 目前该分支的功能实现已经完备，基于 py2.7 和 django1.11.16。后期如无 bug，该分支将不再进行多余更新。
 * 2018.12.28
-  * 增加websocket心跳检测 
-  * 虚拟终端将[term.js](https://github.com/chjj/term.js)替换成[xterm.js](https://github.com/xtermjs/xterm.js)
+  * 增加 websocket 心跳检测 
+  * 虚拟终端将 [term.js](https://github.com/chjj/term.js) 替换成 [xterm.js](https://github.com/xtermjs/xterm.js)
 * 2018.12.19
   * 局部重构
 * 2018.10.19
