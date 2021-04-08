@@ -7,15 +7,15 @@
 * Python 2.7
 
 ## 预览
-![login](https://github.com/winyuan/dj_webssh/blob/master/static/img/login.png)
-![webssh](https://github.com/winyuan/dj_webssh/blob/master/static/img/webssh.png)
-![log](https://github.com/winyuan/dj_webssh/blob/master/static/img/log.png)
+![login](https://github.com/wenyuan/dj_webssh/blob/master/static/img/login.png)
+![webssh](https://github.com/wenyuan/dj_webssh/blob/master/static/img/webssh.png)
+![log](https://github.com/wenyuan/dj_webssh/blob/master/static/img/log.png)
 
 ## 部署和运行方式
 > 由于gevent的部分功能只能在Unix/Linux下运行，所以该项目不支持部署在windows环境下，须知。
 
 ```bash
-	Step1. git clone https://github.com/winyuan/dj_webssh.git
+	Step1. git clone https://github.com/wenyuan/dj_webssh.git
 	Step2. cd dj_webssh
            pip install -r requirements.txt
            python project_helper/init_data.py
