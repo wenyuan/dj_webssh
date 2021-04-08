@@ -10,16 +10,16 @@
 
 ## 版本
 
-* [稳定可用版本](https://github.com/winyuan/dj_webssh/tree/gevent)
-* [开发中版本](https://github.com/winyuan/dj_webssh/tree/master)
+* [稳定可用版本](https://github.com/wenyuan/dj_webssh/tree/gevent)
+* [开发中版本](https://github.com/wenyuan/dj_webssh/tree/master)
 
 注意：master 版本纯属想折腾，目前暂不能运行。请下载稳定版本使用。
 
 ## 预览
 
-![login](https://github.com/winyuan/dj_webssh/blob/master/static/img/login.png)
-![webssh](https://github.com/winyuan/dj_webssh/blob/master/static/img/webssh.png)
-![log](https://github.com/winyuan/dj_webssh/blob/master/static/img/log.png)
+![login](https://github.com/wenyuan/dj_webssh/blob/master/static/img/login.png)
+![webssh](https://github.com/wenyuan/dj_webssh/blob/master/static/img/webssh.png)
+![log](https://github.com/wenyuan/dj_webssh/blob/master/static/img/log.png)
 
 ## 部署和运行方式
 
@@ -28,7 +28,7 @@
 > 实际工程部署将使用Redis作为我们的通道层，这两种配置方法would都写在settings.py中了。
 
 ```bash
-	Step1. git clone https://github.com/winyuan/dj_webssh.git
+	Step1. git clone https://github.com/wenyuan/dj_webssh.git
 	Step2. cd dj_webssh
            pip install -r requirements.txt
            python project_helper/init_data.py
